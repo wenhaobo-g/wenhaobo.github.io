@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Games | Play Free Online Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background: #121212;
+            color: white;
+        }
+        header {
+            background: #1e1e1e;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 1rem;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4fc3f7;
+        }
+        .nav-links a {
+            color: white;
+            margin: 0 12px;
+            text-decoration: none;
+        }
+        .nav-links a:hover {
+            color: #4fc3f7;
+        }
+        .hero {
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        .search {
+            margin: 2rem auto;
+            max-width: 600px;
+        }
+        .search input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+        }
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .game-card {
+            background: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+        }
+        .game-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+        .game-info {
+            padding: 1rem;
+        }
+        .game-info h3 {
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+        .game-info p {
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+        footer {
+            background: #1e1e1e;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav">
+            <div class="logo">FunGames</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="login.html">Login</a>
+                <a href="admin.html">Admin</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <h1>Play Free Online Games</h1>
+            <p>Enjoy the best casual games anytime, anywhere.</p>
+        </section>
+
+        <div class="search">
+            <input type="text" placeholder="Search games...">
+        </div>
+
+        <h2 style="margin: 2rem 0 1rem;">Popular Games</h2>
+        <div class="games-grid" id="gamesList">
+            <div class="game-card" onclick="location.href='game-puzzle.html'">
+                <img src="https://picsum.photos/seed/puzzle/400/200" alt="Puzzle Game">
+                <div class="game-info">
+                    <h3>Sliding Puzzle</h3>
+                    <p>Classic puzzle game</p>
+                </div>
+            </div>
+            <div class="game-card" onclick="location.href='game-word.html'">
+                <img src="https://picsum.photos/seed/word/400/200" alt="Word Game">
+                <div class="game-info">
+                    <h3>Word Guess</h3>
+                    <p>Learn English words</p>
+                </div>
+            </div>
+            <div class="game-card" onclick="location.href='game-match.html'">
+                <img src="https://picsum.photos/seed/match/400/200" alt="Match Game">
+                <div class="game-info">
+                    <h3>Tile Match</h3>
+                    <p>Fun matching game</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 FunGames. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const games = JSON.parse(localStorage.getItem('games')) || [
+            { id:1, name:"Sliding Puzzle", desc:"Classic puzzle game", link:"game-puzzle.html" },
+            { id:2, name:"Word Guess", desc:"Learn English words", link:"game-word.html" },
+            { id:3, name:"Tile Match", desc:"Fun matching game", link:"game-match.html" }
+        ];
+
+        function renderGames() {
+            const list = document.getElementById('gamesList');
+            list.innerHTML = '';
+            games.forEach(g => {
+                list.innerHTML += `
+                <div class="game-card" onclick="location.href='${g.link}'">
+                    <img src="https://picsum.photos/seed/${g.id}/400/200" alt="${g.name}">
+                    <div class="game-info">
+                        <h3>${g.name}</h3>
+                        <p>${g.desc}</p>
+                    </div>
+                </div>`;
+            });
+        }
+        renderGames();
+    </script>
+</body>
+</html>

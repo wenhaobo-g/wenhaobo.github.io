@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sliding Puzzle</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:Arial; }
+        body { background:#121212; color:white; display:grid; place-items:center; padding:2rem; }
+        .puzzle { display:grid; grid-template-columns:repeat(3,100px); gap:4px; margin:2rem 0; }
+        .tile { width:100px; height:100px; background:#4fc3f7; display:grid; place-items:center; font-size:24px; cursor:pointer; color:black; border-radius:6px; }
+        .review { margin-top:2rem; text-align:center; }
+        input { padding:8px; width:200px; }
+        button { padding:8px 16px; background:#4fc3f7; color:white; border:none; border-radius:6px; cursor:pointer; margin-top:10px; }
+        .stars { color:gold; font-size:20px; margin:10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Sliding Puzzle</h1>
+    <div class="puzzle" id="puzzle"></div>
+    <div class="review">
+        <div class="stars" id="stars"></div>
+        <input id="comment" placeholder="Write a comment">
+        <button onclick="postReview()">Post Review</button>
+        <div id="reviews"></div>
+    </div>
+
+    <script>
+        const nums = [1,2,3,4,5,6,7,8,''].sort(()=>Math.random()-0.5);
+        const p = document.getElementById('puzzle');
+
+        nums.forEach(n => {
+            const t = document.createElement('div');
+            t.className = 'tile';
+            t.innerText = n;
+            t.onclick = () => move(n);
+            p.appendChild(t);
+        });
+
+        function move(n) {
+            const i = nums.indexOf(n);
+            const ei = nums.indexOf('');
+            if ([i-1,i+1,i-3,i+3].includes(ei)) {
+                [nums[i], nums[ei]] = [nums[ei], nums[i]];
+                refresh();
+            }
+        }
+
+        function refresh() {
+            p.innerHTML = '';
+            nums.forEach(n => {
+                const t = document.createElement('div');
+                t.className = 'tile';
+                t.innerText = n;
+                t.onclick = () => move(n);
+                p.appendChild(t);
+            });
+        }
+
+        function star(s) {
+            localStorage.setItem('puzzleStars', s);
+            document.getElementById('stars').innerText = '★'.repeat(s);
+        }
+        star(5);
+
+        function postReview() {
+            const txt = document.getElementById('comment').value;
+            const user = localStorage.getItem('logged') || 'Guest';
+            const reviews = JSON.parse(localStorage.getItem('puzzleReviews')) || [];
+            reviews.push({ user, txt });
+            localStorage.setItem('puzzleReviews', JSON.stringify(reviews));
+            loadReviews();
+        }
+
+        function loadReviews() {
+            const r = JSON.parse(localStorage.getItem('puzzleReviews')) || [];
+            document.getElementById('reviews').innerHTML = r.map(i => `<p>${i.user}: ${i.txt}</p>`).join('');
+        }
+        loadReviews();
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Manage Games</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:Arial; }
+        body { background:#121212; color:white; padding:2rem; }
+        .container { max-width:800px; margin:auto; }
+        h2 { color:#4fc3f7; margin-bottom:1rem; }
+        input, button { padding:8px; margin:4px; border-radius:6px; border:none; }
+        button { background:#4fc3f7; color:white; cursor:pointer; }
+        .game { background:#1e1e1e; padding:1rem; margin:8px 0; border-radius:6px; display:flex; justify-content:space-between; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin - Add / Delete Games</h2>
+        <input id="gName" placeholder="Game Name">
+        <input id="gDesc" placeholder="Description">
+        <input id="gLink" placeholder="Page URL e.g. game-new.html">
+        <button onclick="addGame()">Add Game</button>
+
+        <div id="adminList"></div>
+    </div>
+
+    <script>
+        let games = JSON.parse(localStorage.getItem('games')) || [];
+
+        function renderAdmin() {
+            const list = document.getElementById('adminList');
+            list.innerHTML = '';
+            games.forEach((g, i) => {
+                list.innerHTML += `
+                <div class="game">
+                    <div>${g.name} - ${g.desc}</div>
+                    <button onclick="del(${i})">Delete</button>
+                </div>`;
+            });
+        }
+
+        function addGame() {
+            const name = document.getElementById('gName').value;
+            const desc = document.getElementById('gDesc').value;
+            const link = document.getElementById('gLink').value;
+            games.push({ id:Date.now(), name, desc, link });
+            localStorage.setItem('games', JSON.stringify(games));
+            renderAdmin();
+        }
+
+        function del(index) {
+            games.splice(index, 1);
+            localStorage.setItem('games', JSON.stringify(games));
+            renderAdmin();
+        }
+
+        renderAdmin();
+    </script>
+</body>
+</html>

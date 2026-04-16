@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Guess</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:Arial; }
+        body { background:#121212; color:white; padding:2rem; text-align:center; }
+        input { padding:10px; font-size:16px; margin:1rem 0; }
+        button { padding:10px 20px; background:#4fc3f7; color:white; border:none; border-radius:6px; cursor:pointer; }
+    </style>
+</head>
+<body>
+    <h1>Guess the Word</h1>
+    <p>Word: _ A T</p>
+    <input id="ans" placeholder="Type first letter">
+    <button onclick="check()">Check</button>
+
+    <script>
+        function check() {
+            const v = document.getElementById('ans').value.toLowerCase();
+            if (v === 'c') alert('Correct! CAT');
+            else alert('Try again');
+        }
+    </script>
+</body>
+</html>

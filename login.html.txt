@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | FunGames</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:Arial; }
+        body { background:#121212; color:white; display:grid; place-items:center; height:100vh; }
+        .box { background:#1e1e1e; padding:2rem; border-radius:10px; width:100%; max-width:400px; }
+        h2 { color:#4fc3f7; margin-bottom:1rem; text-align:center; }
+        input { width:100%; padding:10px; margin:8px 0; border:none; border-radius:6px; }
+        button { width:100%; padding:10px; background:#4fc3f7; color:white; border:none; border-radius:6px; margin-top:10px; cursor:pointer; }
+        .link { text-align:center; margin-top:1rem; color:#aaa; }
+        a { color:#4fc3f7; text-decoration:none; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Login</h2>
+        <input type="text" id="user" placeholder="Username">
+        <input type="password" id="pass" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <div class="link">Don't have an account? <a href="register.html">Register</a></div>
+    </div>
+
+    <script>
+        function login() {
+            const user = document.getElementById('user').value;
+            const pass = document.getElementById('pass').value;
+            const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+            const found = accounts.find(a => a.user === user && a.pass === pass);
+            if (found) {
+                localStorage.setItem('logged', user);
+                alert('Login success!');
+                location.href = 'index.html';
+            } else {
+                alert('Invalid username or password');
+            }
+        }
+    </script>
+</body>
+</html>

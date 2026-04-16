@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tile Match</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:Arial; }
+        body { background:#121212; color:white; display:grid; place-items:center; padding:2rem; }
+        .board { display:grid; grid-template-columns:repeat(4,70px); gap:6px; margin:2rem 0; }
+        .card { width:70px; height:70px; background:#4fc3f7; border-radius:6px; cursor:pointer; }
+    </style>
+</head>
+<body>
+    <h1>Tile Match Game</h1>
+    <div class="board" id="board"></div>
+
+    <script>
+        const colors = ['red','red','blue','blue','green','green','yellow','yellow'];
+        colors.sort(()=>Math.random()-0.5);
+        const b = document.getElementById('board');
+        let first = null;
+
+        colors.forEach(c => {
+            const d = document.createElement('div');
+            d.className = 'card';
+            d.onclick = () => flip(d, c);
+            b.appendChild(d);
+        });
+
+        function flip(el, c) {
+            el.style.background = c;
+            if (!first) first = { el, c };
+            else {
+                if (first.c === c) {
+                    first.el.onclick = null;
+                    el.onclick = null;
+                } else {
+                    setTimeout(()=>{
+                        first.el.style.background='#4fc3f7';
+                        el.style.background='#4fc3f7';
+                    },500);
+                }
+                first = null;
+            }
+        }
+    </script>
+</body>
+</html>
